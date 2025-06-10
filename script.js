@@ -30,8 +30,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitButton.textContent = 'Submitting...';
                 submitButton.disabled = true;
                 
-                // Send to Google Sheets through our API
-                fetch('/api/join-waitlist', {
+                // Send to Google Sheets through Netlify function
+                fetch('/.netlify/functions/join-waitlist', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
