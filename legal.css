@@ -1,0 +1,67 @@
+/* Legal pages styling */
+.legal {
+    background-color: var(--light);
+    color: var(--text-color);
+    padding: 5rem 0;
+    min-height: 70vh;
+}
+
+.legal h1 {
+    font-family: 'Judson', serif;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.legal-date {
+    color: var(--accent);
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+}
+
+.legal-content {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.legal-content h2 {
+    font-family: 'Judson', serif;
+    font-size: 1.5rem;
+    margin: 1.5rem 0 0.5rem;
+    color: white;
+}
+
+.legal-content h2:first-child {
+    margin-top: 0;
+}
+
+.legal-content p, .legal-content ul, .legal-content li {
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.legal-content ul {
+    padding-left: 1.5rem;
+}
+
+.legal-content li {
+    margin-bottom: 0.5rem;
+}
+
+.legal-footer {
+    text-align: center;
+}
+
+.legal-footer a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+    margin: 0 1rem;
+}
+
+.legal-footer a:hover {
+    opacity: 0.8;
+}

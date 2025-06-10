@@ -1,0 +1,27 @@
+# Ignore Google API credentials
+gen-lang-client-0622333307-a77c6337b3af.json
+
+# Dependency directories
+node_modules/
+vendor/
+
+# Build files
+dist/
+build/
+
+# Environment variables
+.env
+.env.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none">
+  <style>
+    .dog-primary { fill: #2D3047; }
+    .dog-secondary { fill: #FFD166; }
+    .dog-accent { fill: #06D6A0; }
+  </style>
+  <!-- Dog body -->
+  <ellipse cx="400" cy="350" rx="180" ry="150" class="dog-primary" />
+  
+  <!-- Head -->
+  <circle cx="550" cy="270" r="100" class="dog-primary" />
+  
+  <!-- Ears -->
+  <ellipse cx="510" cy="190" rx="40" ry="60" transform="rotate(-15 510 190)" class="dog-primary" />
+  <ellipse cx="590" cy="190" rx="40" ry="60" transform="rotate(15 590 190)" class="dog-primary" />
+  
+  <!-- Nose -->
+  <ellipse cx="595" cy="290" rx="25" ry="18" fill="#1C1E36" />
+  
+  <!-- Eyes -->
+  <circle cx="530" cy="250" r="12" fill="white" />
+  <circle cx="570" cy="250" r="12" fill="white" />
+  <circle cx="535" cy="250" r="6" fill="#1C1E36" />
+  <circle cx="575" cy="250" r="6" fill="#1C1E36" />
+  
+  <!-- Tail -->
+  <path d="M230 320 Q 180 250 200 200" stroke="#2D3047" stroke-width="25" stroke-linecap="round" />
+  
+  <!-- Legs -->
+  <rect x="330" y="450" width="30" height="80" rx="15" class="dog-primary" />
+  <rect x="440" y="450" width="30" height="80" rx="15" class="dog-primary" />
+  
+  <!-- Collar -->
+  <path d="M 480 340 Q 550 360 620 340" stroke="#06D6A0" stroke-width="15" stroke-linecap="round" />
+  
+  <!-- Tag -->
+  <circle cx="550" cy="355" r="15" class="dog-secondary" />
+  
+  <!-- Speech bubble -->
+  <path d="M650 200 Q 720 180 740 120 Q 760 180 740 240 L 720 280 L 650 200" class="dog-accent" opacity="0.9" />
+  <circle cx="700" cy="160" r="8" fill="white" />
+  <circle cx="730" cy="160" r="8" fill="white" />
+  <circle cx="760" cy="160" r="8" fill="white" />
+</svg>
