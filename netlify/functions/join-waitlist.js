@@ -1,19 +1,17 @@
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
-export default async (req) => {
+exports.handler = async function(event, context) {
   // Only allow POST requests
-  if (req.method !== "POST") {
-    return new Response(
-      JSON.stringify({ success: false, message: "Method not allowed" }),
-      {
-        status: 405,
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "Content-Type"
-        }
-      }
-    );
+  if (event.httpMethod !== "POST") {
+    return {
+      statusCode: 405,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type"
+      },
+      body: JSON.stringify({ success: false, message: "Method not allowed" })
+    };
   }
   
   try {
@@ -22,21 +20,18 @@ export default async (req) => {
     console.log('GOOGLE_SERVICE_ACCOUNT_EMAIL exists:', !!process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL);
     console.log('GOOGLE_PRIVATE_KEY exists:', !!process.env.GOOGLE_PRIVATE_KEY);
     
-    const body = await req.json();
-    const { email } = body;
+    const { email } = JSON.parse(event.body);
     
     if (!email) {
-      return new Response(
-        JSON.stringify({ success: false, message: "Email is required" }),
-        {
-          status: 400,
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Headers": "Content-Type"
-          }
-        }
-      );
+      return {
+        statusCode: 400,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "Content-Type"
+        },
+        body: JSON.stringify({ success: false, message: "Email is required" })
+      };
     }
 
     // Connect to Google Sheets using environment variables
@@ -68,36 +63,32 @@ export default async (req) => {
       date: new Date().toISOString()
     });
 
-    return new Response(
-      JSON.stringify({ success: true, message: "Thank you for joining our waitlist!" }),
-      {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "Content-Type"
-        }
-      }
-    );
+    return {
+      statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type"
+      },
+      body: JSON.stringify({ success: true, message: "Thank you for joining our waitlist!" })
+    };
   } catch (error) {
     console.log('Error adding to waitlist:', error);
     console.log('Error details:', error.message);
     console.log('Error stack:', error.stack);
     
-    return new Response(
-      JSON.stringify({ 
+    return {
+      statusCode: 500,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type"
+      },
+      body: JSON.stringify({ 
         success: false, 
         message: "Failed to add you to the waitlist", 
         error: error.message 
-      }),
-      {
-        status: 500,
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "Content-Type"
-        }
-      }
-    );
+      })
+    };
   }
 };
