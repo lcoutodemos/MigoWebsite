@@ -30,44 +30,49 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitButton.textContent = 'Submitting...';
                 submitButton.disabled = true;
                 
-                // Use FormSubmit.co service - super simple, no backend needed
-                const formSubmitEmail = 'lucascouto.demos@gmail.com'; // Change this to your email
-                
-                const hiddenForm = document.createElement('form');
-                hiddenForm.style.display = 'none';
-                hiddenForm.method = 'POST';
-                hiddenForm.action = `https://formsubmit.co/${formSubmitEmail}`;
-                
-                // Email field
-                const emailField = document.createElement('input');
-                emailField.type = 'email';
-                emailField.name = 'email';
-                emailField.value = email;
-                
-                // Subject field
-                const subjectField = document.createElement('input');
-                subjectField.type = 'hidden';
-                subjectField.name = '_subject';
-                subjectField.value = 'New Migo Beta Signup';
-                
-                // Redirect field
-                const redirectField = document.createElement('input');
-                redirectField.type = 'hidden';
-                redirectField.name = '_next';
-                redirectField.value = window.location.href;
-                
-                // Add fields to form
-                hiddenForm.appendChild(emailField);
-                hiddenForm.appendChild(subjectField);
-                hiddenForm.appendChild(redirectField);
-                
-                // Add form to document and submit
-                document.body.appendChild(hiddenForm);
-                hiddenForm.submit();
-                
-                // Reset form state
-                submitButton.textContent = originalText;
-                submitButton.disabled = false;
+                // Use fetch to submit the form without page redirect
+                fetch('https://formsubmit.co/ajax/lucascouto.demos@gmail.com', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        _subject: 'New Migo Beta Signup'
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Show success message
+                    const betaSection = document.querySelector('.beta-section');
+                    const formContainer = document.getElementById('beta-form').parentElement;
+                    
+                    // Create success message
+                    const successMessage = document.createElement('div');
+                    successMessage.className = 'success-message';
+                    successMessage.innerHTML = `
+                        <h3>Thank you for joining!</h3>
+                        <p>We'll let you know when Migo is ready for beta testing.</p>
+                    `;
+                    successMessage.style.textAlign = 'center';
+                    successMessage.style.padding = '20px';
+                    successMessage.style.backgroundColor = 'rgba(6, 214, 160, 0.1)';
+                    successMessage.style.borderRadius = '8px';
+                    successMessage.style.marginTop = '20px';
+                    
+                    // Replace form with success message
+                    formContainer.innerHTML = '';
+                    formContainer.appendChild(successMessage);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Sorry, there was an error. Please try again later.');
+                    
+                    // Reset form state
+                    submitButton.textContent = originalText;
+                    submitButton.disabled = false;
+                });
             }
         });
     }
