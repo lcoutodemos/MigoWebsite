@@ -30,33 +30,44 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitButton.textContent = 'Submitting...';
                 submitButton.disabled = true;
                 
-                // Send to Google Sheets through Netlify function
-                fetch('/.netlify/functions/join-waitlist', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ email }),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Success message
-                        alert('Thank you for joining our beta program! We\'ll reach out to ' + email + ' when Migo is ready.');
-                        this.reset();
-                    } else {
-                        alert('Error: ' + (data.message || 'Something went wrong'));
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred. Please try again later.');
-                })
-                .finally(() => {
-                    // Reset button
-                    submitButton.textContent = originalText;
-                    submitButton.disabled = false;
-                });
+                // Use FormSubmit.co service - super simple, no backend needed
+                const formSubmitEmail = 'lucascouto.demos@gmail.com'; // Change this to your email
+                
+                const hiddenForm = document.createElement('form');
+                hiddenForm.style.display = 'none';
+                hiddenForm.method = 'POST';
+                hiddenForm.action = `https://formsubmit.co/${formSubmitEmail}`;
+                
+                // Email field
+                const emailField = document.createElement('input');
+                emailField.type = 'email';
+                emailField.name = 'email';
+                emailField.value = email;
+                
+                // Subject field
+                const subjectField = document.createElement('input');
+                subjectField.type = 'hidden';
+                subjectField.name = '_subject';
+                subjectField.value = 'New Migo Beta Signup';
+                
+                // Redirect field
+                const redirectField = document.createElement('input');
+                redirectField.type = 'hidden';
+                redirectField.name = '_next';
+                redirectField.value = window.location.href;
+                
+                // Add fields to form
+                hiddenForm.appendChild(emailField);
+                hiddenForm.appendChild(subjectField);
+                hiddenForm.appendChild(redirectField);
+                
+                // Add form to document and submit
+                document.body.appendChild(hiddenForm);
+                hiddenForm.submit();
+                
+                // Reset form state
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
             }
         });
     }
